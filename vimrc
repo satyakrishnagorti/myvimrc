@@ -4,78 +4,81 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
+" Plugins 
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-Plugin 'L9'
-" Git plugin not hosted on GitHub
 Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-" Plugin 'user/L9', {'name': 'newL9'}
-
-" adding my own
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'bling/vim-airline'
+Plugin 'valloric/youcompleteme'
 Plugin 'scrooloose/syntastic'
-Plugin 'flazz/vim-colorschemes'
-Bundle 'Lokaltog/vim-easymotion'
+Plugin 'tpope/vim-surround'
 Plugin 'kien/ctrlp.vim'
-Plugin 'davidhalter/jedi-vim'
+Plugin 'pangloss/vim-javascript'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'flazz/vim-colorschemes'
 
-""EasyMotion Testing {{
 
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
+call vundle#end()            " required
+filetype plugin indent on    " required
 
-"" }} EasyMotion
-"" NeoComplCache testing {{
-let g:neocomplcache_enable_at_startup = 1
-"" }}
+
+" Custom config
 set nu
 set laststatus=2
 set guifont=Literation\ Mono\ Powerline:h20
 set t_Co=256
-"
-"
+set ts=4 sts=4 sw=4 noexpandtab
+set mouse=a
+set background=dark
+
+
+" Custom maps
+" go next/previous in buffer
+nnoremap <leader>bn :bnext<CR>
+nnoremap <leader>bp :bprevious<CR>
+" NERDTree mappint to <C-t>
+map <C-t> :NERDTreeToggle<CR>
+" youcompleteme jump to definition
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
+
+
+
+
+" Variables
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='badwolf'
 
-"" NERDTree mappint to <C-t> {{
-	map <C-t> :NERDTreeToggle<CR>
-"" }}
+" youcompleteme fix
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/youcompleteme/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 
-hi Normal ctermbg=NONE
+" Setting make and yaml file to use tabs and spaces
+if has("autocmd")
+  " Enable file type detection
+  filetype on
 
-"" C++11 syntax {{
-au BufNewFile,BufRead *.cpp set syntax=cpp11
-"" }}
+  " Syntax of these languages is fussy over tabs Vs spaces
+  autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
+  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+endif
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+" Vundle comments
 " To ignore plugin indent changes, instead use:
-"filetype plugin on
+" filetype plugin on
 "
-" Brief help
+"  Brief help
 " :PluginList       - lists configured plugins
 " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
 " :PluginSearch foo - searches for foo; append `!` to refresh local cache
@@ -83,5 +86,3 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-
-"colorscheme molokai
